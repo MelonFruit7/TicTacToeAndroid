@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var turn = 0; private val plays = arrayOf("O","X", "Player 2's Turn", "Player 1's Turn")
     private var check: Array<String> = Array(9) {""}
     private var P1SCORE = 0; private var P2SCORE = 0
+    private var toast: Toast? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -53,10 +54,14 @@ class MainActivity : AppCompatActivity() {
                 btn.text = plays[turn++%2]
                 checkWin()
             } else {
-                Toast.makeText(applicationContext, "You can't place here", Toast.LENGTH_SHORT).show()
+                if (toast != null) toast!!.cancel()
+                toast = Toast.makeText(applicationContext, "You can't place here", Toast.LENGTH_SHORT)
+                toast!!.show()
             }
         } else {
-            Toast.makeText(applicationContext, "Please start the game by clicking start", Toast.LENGTH_SHORT).show()
+            if (toast != null) toast!!.cancel()
+            toast = Toast.makeText(applicationContext, "Please start the game by clicking start", Toast.LENGTH_SHORT)
+            toast!!.show()
         }
     }
     private fun checkWin() {
